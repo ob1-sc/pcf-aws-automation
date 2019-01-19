@@ -24,7 +24,7 @@ terraform plan \
   -var "dns_suffix=${DNS_SUFFIX}" \
   -var "vpc_cidr=${VPC_CIDR}" \
   -var "rds_instance_count=0" \
-  -var "ops_manager_vm=${OPS_MANAGER_VM}"
+  -var "ops_manager_vm=${OPS_MANAGER_VM}" \
   -out terraform.tfplan \
   aws-terraform/terraforming-pas
 

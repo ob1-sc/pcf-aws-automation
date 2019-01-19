@@ -1,0 +1,9 @@
+---
+env_name: pas
+aws_region: eu-west-1
+aws_az1: eu-west-1a
+aws_az2: eu-west-1b
+aws_az3: eu-west-1c
+dns_suffix: aws.siob.me
+hosted_zone: siob.me
+vpc_cidr: 10.0.0.0/16

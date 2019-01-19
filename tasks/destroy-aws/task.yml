@@ -12,5 +12,7 @@ inputs:
   - name: pcf-aws-automation
 outputs:
   - name: terraform-state-output
+params:
+  AWS_REGION:
 run:
   path: pcf-aws-automation/tasks/destroy-aws/task.sh

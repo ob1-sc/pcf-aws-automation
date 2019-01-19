@@ -112,6 +112,8 @@ jobs:
 
   - task: destroy-infrastructure
     file: pcf-aws-automation/tasks/destroy-aws/task.yml
+    params:
+      AWS_REGION: ((aws_region))
     ensure:
       params:
         file: terraform-state-output/terraform.tfstate

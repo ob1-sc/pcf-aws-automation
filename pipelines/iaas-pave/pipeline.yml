@@ -94,7 +94,6 @@ jobs:
       AWS_REGION: ((aws_region))
 
   - task: create-infrastructure
-    image: platform-automation-image
     file: pcf-aws-automation/tasks/prepare-aws/task.yml
     params:
       ENV_NAME: ((env_name))
@@ -114,27 +113,12 @@ jobs:
 
 - name: destroy-iaas
   plan:
-
   - aggregate:
     - get: pcf-aws-automation
-    - get: platform-automation-image
-      params:
-        unpack: true
-    - get: platform-automation-tasks
-      params:
-        unpack: true
-    - get: aws-terraform
     - get: terraform-state
-    - get: pivnet-opsmgr
-      params:
-        globs:
-        - '*AWS.yml'
+    - get: aws-terraform
 
   - task: destroy-infrastructure
-    ensure:
-      params:
-        file: terraform-state-output/terraform.tfstate
-      put: terraform-state
     file: pcf-aws-automation/tasks/destroy-aws/task.yml
     params:
       ENV_NAME: ((env_name))
@@ -146,4 +130,8 @@ jobs:
       AWS_AZ3: ((aws_az3))
       HOSTED_ZONE: ((hosted_zone))
       DNS_SUFFIX: ((dns_suffix))
+    ensure:
+      params:
+        file: terraform-state-output/terraform.tfstate
+      put: terraform-state
       VPC_CIDR: ((vpc_cidr))

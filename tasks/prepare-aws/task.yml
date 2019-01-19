@@ -24,5 +24,6 @@ params:
   HOSTED_ZONE:
   DNS_SUFFIX:
   VPC_CIDR:
+  OPS_MANAGER_VM:
 run:
   path: pcf-aws-automation/tasks/prepare-aws/task.sh

@@ -97,6 +97,7 @@ jobs:
       HOSTED_ZONE: ((hosted_zone))
       DNS_SUFFIX: ((dns_suffix))
       VPC_CIDR: ((vpc_cidr))
+      OPS_MANAGER_VM: ((ops_manager_vm))
     ensure:
       params:
         file: terraform-state-output/terraform.tfstate
@@ -111,16 +112,6 @@ jobs:
 
   - task: destroy-infrastructure
     file: pcf-aws-automation/tasks/destroy-aws/task.yml
-    # params:
-    #   ENV_NAME: ((env_name))
-    #   AWS_ACCESS_KEY_ID: ((access_key_id))
-    #   AWS_SECRET_ACCESS_KEY: ((secret_access_key))
-    #   AWS_REGION: ((aws_region))
-    #   AWS_AZ1: ((aws_az1))
-    #   AWS_AZ2: ((aws_az2))
-    #   AWS_AZ3: ((aws_az3))
-    #   HOSTED_ZONE: ((hosted_zone))
-    #   DNS_SUFFIX: ((dns_suffix))
     ensure:
       params:
         file: terraform-state-output/terraform.tfstate

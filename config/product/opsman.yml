@@ -9,7 +9,7 @@ opsman-configuration:
     vpc_subnet_id: subnet-034ca56f8ae93f0b4
     security_group_id: sg-07d116615e4fb3b56
     key_pair_name: pas-ops-manager-key
-    iam_instance_profile_name: pas_om_role
+    iam_instance_profile_name: pas_ops_manager_role
     instance_type: m5.large
     # At least one IP address (public or private) needs to be assigned to the VM.
     public_ip: 63.34.167.60

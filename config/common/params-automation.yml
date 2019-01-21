@@ -1,0 +1,7 @@
+---
+terraform_repo: https://github.com/pivotal-cf/terraforming-aws
+automation_repo: https://github.com/ob1-sc/pcf-aws-automation
+
+artifacts_bucket: siob-platform-automation
+tf_state_bucket: siob-platform-automation-tf-state
+credhub-server: https://plane.cp.aws.siob.me:8844

@@ -1,10 +1,3 @@
 ---
-terraform_repo: https://github.com/pivotal-cf/terraforming-aws
-automation_repo: https://github.com/ob1-sc/pcf-aws-automation
-
-artifacts_bucket: siob-platform-automation
-tf_state_bucket: siob-platform-automation-tf-state
-configuration_uri: https://github.com/ob1-sc/pcf-aws-pa-config
-
 opsman_major_minor_version: ^2\.4\.[0-9]+$
 ops_manager_vm: false

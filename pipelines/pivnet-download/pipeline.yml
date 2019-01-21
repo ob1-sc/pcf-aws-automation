@@ -27,7 +27,7 @@ resources:
 - name: platform-automation-pivnet
   type: pivnet
   source:
-    api_token: ((pivnet_token))
+    api_token: ((pivnet-token))
     product_slug: platform-automation
     product_version: 1\.(.*) # pin to major version 1
     sort_by: semver
@@ -69,6 +69,7 @@ jobs:
       CREDHUB_CLIENT: ((credhub-client))
       CREDHUB_SECRET: ((credhub-secret))
       CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca))
       PREFIX: '/'
       INTERPOLATION_PATH: 'config/product'
     input_mapping:
@@ -80,6 +81,8 @@ jobs:
     file: platform-automation-tasks/tasks/download-product.yml
     params:
       CONFIG_FILE: config/product/opsman.yml
+    input_mapping:
+      config: pcf-aws-automation
   - aggregate:
     - put: opsman-product
       params:

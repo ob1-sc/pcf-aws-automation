@@ -35,7 +35,7 @@ resources:
     secret_access_key: ((secret_access_key))
     region_name: ((aws_region))
     bucket: ((artifacts_bucket))
-    regexp: ((opsman_image_s3_versioned_regexp)) # vsphere ex: pcf-vsphere-(.*).ova
+    regexp: OpsManager(.*)onAWS.yml
 
 # configurations
 - name: pcf-aws-automation

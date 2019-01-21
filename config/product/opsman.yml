@@ -1,9 +1,4 @@
 ---
-pivnet-api-token: ((pivnet-token))
-pivnet-file-glob: "*AWS.yml"
-pivnet-product-slug: ops-manager
-product-version: 2.4.2
-
 opsman-configuration:
   aws:
     access_key_id: ((/concourse/main/access_key_id))

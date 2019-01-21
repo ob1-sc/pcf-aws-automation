@@ -1,0 +1,4 @@
+---
+username: ((/concourse/main/opsman.username))
+password: ((/concourse/main/opsman.password))
+decryption-passphrase: ((/concourse/main/opsman-passphrase))

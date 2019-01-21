@@ -66,7 +66,7 @@ jobs:
       CREDHUB_CLIENT: ((credhub-client))
       CREDHUB_SECRET: ((credhub-secret))
       CREDHUB_SERVER: ((credhub-server))
-      CREDHUB_CA_CERT: ((credhub-ca))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
       PREFIX: '/'
       INTERPOLATION_PATH: 'config/product'
     input_mapping:

@@ -184,8 +184,15 @@ jobs:
         ENV_FILE: config/environment/env.yml
         DIRECTOR_CONFIG_FILE: config/product/config/director.yml
 
+    - task: apply-director-changes
+      image: pcf-automation-image
+      file: pcf-automation-tasks/tasks/apply-director-changes.yml
+      input_mapping:
+        env: env-interpolated
+      params:
+        ENV_FILE: config/environment/env.yml
+
 - name: store-staged-director-config
-  serial: true
   plan:
   - aggregate:
     - get: pcf-automation-tasks

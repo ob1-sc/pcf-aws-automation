@@ -36,82 +36,82 @@ iaas-configuration:
   ssh_private_key: ((ssh_private_key))
 network-assignment:
   network:
-    name: pas-infrastructure-network
+    name: ((network))
   other_availability_zones: []
   singleton_availability_zone:
-    name: eu-west-1a
+    name: ((singleton_az))
 networks-configuration:
   icmp_checks_enabled: false
-  networks:
-  - name: pas-infrastructure-network
-    subnets:
-    - iaas_identifier: subnet-034ca56f8ae93f0b4
-      cidr: 10.0.16.0/28
-      dns: 10.0.0.2
-      gateway: 10.0.16.1
-      reserved_ip_ranges: 10.0.16.0-10.0.16.4
-      availability_zone_names:
-      - eu-west-1a
-    - iaas_identifier: subnet-0fc636c9f475d39ee
-      cidr: 10.0.16.16/28
-      dns: 10.0.0.2
-      gateway: 10.0.16.17
-      reserved_ip_ranges: 10.0.16.16-10.0.16.20
-      availability_zone_names:
-      - eu-west-1b
-    - iaas_identifier: subnet-0c1947cc65519eeaf
-      cidr: 10.0.16.32/28
-      dns: 10.0.0.2
-      gateway: 10.0.16.33
-      reserved_ip_ranges: 10.0.16.32-10.0.16.36
-      availability_zone_names:
-      - eu-west-1c
-  - name: pas-ert-network
-    subnets:
-    - iaas_identifier: subnet-060d8d806f7a9d814
-      cidr: 10.0.4.0/24
-      dns: 10.0.0.2
-      gateway: 10.0.4.1
-      reserved_ip_ranges: 10.0.4.0-10.0.4.4
-      availability_zone_names:
-      - eu-west-1a
-    - iaas_identifier: subnet-0dee92398b521bffb
-      cidr: 10.0.5.0/24
-      dns: 10.0.0.2
-      gateway: 10.0.5.1
-      reserved_ip_ranges: 10.0.5.0-10.0.5.4
-      availability_zone_names:
-      - eu-west-1b
-    - iaas_identifier: subnet-09cca90ff03251481
-      cidr: 10.0.6.0/24
-      dns: 10.0.0.2
-      gateway: 10.0.6.1
-      reserved_ip_ranges: 10.0.6.0-10.0.6.4
-      availability_zone_names:
-      - eu-west-1c
-  - name: pas-services-network
-    subnets:
-    - iaas_identifier: subnet-0cb3025ac5a512762
-      cidr: 10.0.8.0/24
-      dns: 10.0.0.2
-      gateway: 10.0.8.1
-      reserved_ip_ranges: 10.0.8.0-10.0.8.4
-      availability_zone_names:
-      - eu-west-1a
-    - iaas_identifier: subnet-067e38bc7922faf27
-      cidr: 10.0.9.0/24
-      dns: 10.0.0.2
-      gateway: 10.0.9.1
-      reserved_ip_ranges: 10.0.9.0-10.0.9.4
-      availability_zone_names:
-      - eu-west-1b
-    - iaas_identifier: subnet-05d2915fda37923b5
-      cidr: 10.0.10.0/24
-      dns: 10.0.0.2
-      gateway: 10.0.10.1
-      reserved_ip_ranges: 10.0.10.0-10.0.10.4
-      availability_zone_names:
-      - eu-west-1c
+  networks: ((networks-configuration))
+  # - name: pas-infrastructure-network
+  #   subnets:
+  #   - iaas_identifier: subnet-034ca56f8ae93f0b4
+  #     cidr: 10.0.16.0/28
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.16.1
+  #     reserved_ip_ranges: 10.0.16.0-10.0.16.4
+  #     availability_zone_names:
+  #     - eu-west-1a
+  #   - iaas_identifier: subnet-0fc636c9f475d39ee
+  #     cidr: 10.0.16.16/28
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.16.17
+  #     reserved_ip_ranges: 10.0.16.16-10.0.16.20
+  #     availability_zone_names:
+  #     - eu-west-1b
+  #   - iaas_identifier: subnet-0c1947cc65519eeaf
+  #     cidr: 10.0.16.32/28
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.16.33
+  #     reserved_ip_ranges: 10.0.16.32-10.0.16.36
+  #     availability_zone_names:
+  #     - eu-west-1c
+  # - name: pas-ert-network
+  #   subnets:
+  #   - iaas_identifier: subnet-060d8d806f7a9d814
+  #     cidr: 10.0.4.0/24
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.4.1
+  #     reserved_ip_ranges: 10.0.4.0-10.0.4.4
+  #     availability_zone_names:
+  #     - eu-west-1a
+  #   - iaas_identifier: subnet-0dee92398b521bffb
+  #     cidr: 10.0.5.0/24
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.5.1
+  #     reserved_ip_ranges: 10.0.5.0-10.0.5.4
+  #     availability_zone_names:
+  #     - eu-west-1b
+  #   - iaas_identifier: subnet-09cca90ff03251481
+  #     cidr: 10.0.6.0/24
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.6.1
+  #     reserved_ip_ranges: 10.0.6.0-10.0.6.4
+  #     availability_zone_names:
+  #     - eu-west-1c
+  # - name: pas-services-network
+  #   subnets:
+  #   - iaas_identifier: subnet-0cb3025ac5a512762
+  #     cidr: 10.0.8.0/24
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.8.1
+  #     reserved_ip_ranges: 10.0.8.0-10.0.8.4
+  #     availability_zone_names:
+  #     - eu-west-1a
+  #   - iaas_identifier: subnet-067e38bc7922faf27
+  #     cidr: 10.0.9.0/24
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.9.1
+  #     reserved_ip_ranges: 10.0.9.0-10.0.9.4
+  #     availability_zone_names:
+  #     - eu-west-1b
+  #   - iaas_identifier: subnet-05d2915fda37923b5
+  #     cidr: 10.0.10.0/24
+  #     dns: 10.0.0.2
+  #     gateway: 10.0.10.1
+  #     reserved_ip_ranges: 10.0.10.0-10.0.10.4
+  #     availability_zone_names:
+  #     - eu-west-1c
 resource-configuration:
   compilation:
     instances: automatic

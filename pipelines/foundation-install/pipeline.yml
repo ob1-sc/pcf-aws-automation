@@ -74,6 +74,21 @@ jobs:
     output_mapping:
       interpolated-files: pcf-aws-automation-interpolated
 
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/environment'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: env-interpolated
+
   - task: create-vm
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/create-vm.yml
@@ -110,7 +125,7 @@ jobs:
     file: pcf-automation-tasks/tasks/configure-authentication.yml
     attempts: 10
     input_mapping:
-      env: pcf-aws-automation-interpolated
+      env: env-interpolated
       config: pcf-aws-automation-interpolated
     params:
       ENV_FILE: config/environment/env.yml
@@ -142,16 +157,31 @@ jobs:
       output_mapping:
         interpolated-files: pcf-aws-automation-interpolated
 
+    - task: credhub-interpolate
+      image: pcf-automation-image
+      file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+      params:
+        CREDHUB_CLIENT: ((credhub-client))
+        CREDHUB_SECRET: ((credhub-secret))
+        CREDHUB_SERVER: ((credhub-server))
+        CREDHUB_CA_CERT: ((credhub-ca.certificate))
+        PREFIX: '/'
+        INTERPOLATION_PATH: 'config/environment'
+      input_mapping:
+        files: pcf-aws-automation
+      output_mapping:
+        interpolated-files: env-interpolated
+
     - task: configure-director
       image: pcf-automation-image
       file: pcf-automation-tasks/tasks/configure-director.yml
       input_mapping:
-        config: pcf-aws-automation-interpolated
-        env: pcf-aws-automation-interpolated
+        config: pcf-aws-automation
+        env: env-interpolated
         vars: pcf-aws-automation-interpolated
       params:
-        VARS_FILES: config/product/vars/director.yml
-        ENV_FILE: environment/env.yml
+        VARS_FILES: vars/config/product/vars/director.yml
+        ENV_FILE: config/environment/env.yml
         DIRECTOR_CONFIG_FILE: config/product/config/director.yml
 
 - name: store-staged-director-config

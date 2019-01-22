@@ -127,6 +127,33 @@ jobs:
           unpack: true
       - get: pcf-aws-automation
 
+    - task: credhub-interpolate
+      image: pcf-automation-image
+      file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+      params:
+        CREDHUB_CLIENT: ((credhub-client))
+        CREDHUB_SECRET: ((credhub-secret))
+        CREDHUB_SERVER: ((credhub-server))
+        CREDHUB_CA_CERT: ((credhub-ca.certificate))
+        PREFIX: '/'
+        INTERPOLATION_PATH: 'config/product'
+      input_mapping:
+        files: pcf-aws-automation
+      output_mapping:
+        interpolated-files: pcf-aws-automation-interpolated
+
+    - task: configure-director
+      image: pcf-automation-image
+      file: pcf-automation-tasks/tasks/configure-director.yml
+      input_mapping:
+        config: pcf-aws-automation-interpolated
+        env: pcf-aws-automation-interpolated
+        # vars: variable
+      params:
+        # VARS_FILES: vars/((foundation))/vars/director-vars.yml
+        ENV_FILE: config/product/env.yml
+        DIRECTOR_CONFIG_FILE: config/product/director.yml
+
 - name: store-staged-director-config
   serial: true
   plan:
@@ -172,7 +199,7 @@ jobs:
       repository-commit: configuration-commit
     params:
       FILE_SOURCE_PATH: director.yml
-      FILE_DESTINATION_PATH: config/product/director.yml
+      FILE_DESTINATION_PATH: state/director.yml
       GIT_AUTHOR_EMAIL: "pcf-pipeline-bot@example.com"
       GIT_AUTHOR_NAME: "PCF Automation Bot"
       COMMIT_MESSAGE: 'Update director config file'

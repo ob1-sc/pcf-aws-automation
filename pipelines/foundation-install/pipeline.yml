@@ -115,3 +115,68 @@ jobs:
     params:
       ENV_FILE: config/product/env.yml
       AUTH_CONFIG_FILE: config/product/opsman-auth.yml
+
+- name: install-director
+  plan:
+    - aggregate:
+      - get: pcf-automation-image
+        params:
+          unpack: true
+      - get: pcf-automation-tasks
+        params:
+          unpack: true
+      - get: pcf-aws-automation
+
+- name: store-staged-director-config
+  serial: true
+  plan:
+  - aggregate:
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
+    - get: pcf-aws-automation
+
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/product'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: pcf-aws-automation-interpolated
+
+  - task: staged-director-config
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/staged-director-config.yml
+    input_mapping:
+      env: pcf-aws-automation-interpolated
+    params:
+      ENV_FILE: config/product/env.yml
+
+  - task: make-commit
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/make-git-commit.yml
+    input_mapping:
+      repository: pcf-aws-automation
+      file-source: generated-config
+    output_mapping:
+      repository-commit: configuration-commit
+    params:
+      FILE_SOURCE_PATH: director.yml
+      FILE_DESTINATION_PATH: config/product/director.yml
+      GIT_AUTHOR_EMAIL: "pcf-pipeline-bot@example.com"
+      GIT_AUTHOR_NAME: "PCF Automation Bot"
+      COMMIT_MESSAGE: 'Update director config file'
+  - put: pcf-aws-automation
+    params:
+      repository: configuration-commit
+      merge: true

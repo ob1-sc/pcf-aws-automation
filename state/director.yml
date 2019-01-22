@@ -1,7 +1,10 @@
 az-configuration:
-- name: ((az1))
-- name: ((az2))
-- name: ((az3))
+- name: eu-west-1a
+  iaas_configuration_guid: f1692d836934834ca409
+- name: eu-west-1b
+  iaas_configuration_guid: f1692d836934834ca409
+- name: eu-west-1c
+  iaas_configuration_guid: f1692d836934834ca409
 director-configuration:
   allow_legacy_agents: true
   blobstore_type: local
@@ -20,20 +23,22 @@ director-configuration:
   keep_unreachable_vms: false
   local_blobstore_options:
     tls_enabled: true
-  ntp_servers_string: ((ntp_servers))
+  ntp_servers_string: 0.amazon.pool.ntp.org, 1.amazon.pool.ntp.org, 2.amazon.pool.ntp.org,
+    3.amazon.pool.ntp.org
   post_deploy_enabled: false
   resurrector_enabled: false
   retry_bosh_deploys: false
   skip_director_drain: true
 iaas-configuration:
-  access_type: aws-keys
+  additional_cloud_properties: {}
   encrypted: false
-  access_key_id: ((aws_access_key_id))
-  secret_access_key: ((aws_secret_access_key))
-  key_pair_name: ((key_pair_name))
-  region: ((region))
-  security_group: ((security_group))
-  ssh_private_key: ((ssh_private_key))
+  guid: ((iaas-configuration_guid))
+  iam_instance_profile: ((iaas-configuration_iam_instance_profile))
+  key_pair_name: ((iaas-configuration_key_pair_name))
+  kms_key_arn: ((iaas-configuration_kms_key_arn))
+  name: ((iaas-configuration_name))
+  region: ((iaas-configuration_region))
+  security_group: ((iaas-configuration_security_group))
 network-assignment:
   network:
     name: pas-infrastructure-network

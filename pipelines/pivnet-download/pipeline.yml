@@ -70,9 +70,9 @@ jobs:
       CREDHUB_CLIENT: ((credhub-client))
       CREDHUB_SECRET: ((credhub-secret))
       CREDHUB_SERVER: ((credhub-server))
-      CREDHUB_CA_CERT: ((credhub-ca))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
       PREFIX: '/'
-      INTERPOLATION_PATH: 'config/product'
+      INTERPOLATION_PATH: 'config/pivnet'
     input_mapping:
       files: pcf-aws-automation
     output_mapping:
@@ -81,7 +81,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/download-product.yml
     params:
-      CONFIG_FILE: config/product/opsman.yml
+      CONFIG_FILE: config/pivnet/opsman.yml
     input_mapping:
       config: pcf-aws-automation
   - aggregate:

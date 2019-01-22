@@ -68,7 +68,7 @@ jobs:
       CREDHUB_SERVER: ((credhub-server))
       CREDHUB_CA_CERT: ((credhub-ca.certificate))
       PREFIX: '/'
-      INTERPOLATION_PATH: 'config/product'
+      INTERPOLATION_PATH: 'config/product/vars'
     input_mapping:
       files: pcf-aws-automation
     output_mapping:
@@ -82,7 +82,7 @@ jobs:
       state: pcf-aws-automation
       config: pcf-aws-automation-interpolated
     params:
-      OPSMAN_CONFIG_FILE: config/product/opsman.yml
+      OPSMAN_CONFIG_FILE: config/product/vars/opsman.yml
       STATE_FILE: state/opsman.yml
     ensure: &make-state-commit
       do:
@@ -113,8 +113,8 @@ jobs:
       env: pcf-aws-automation-interpolated
       config: pcf-aws-automation-interpolated
     params:
-      ENV_FILE: config/product/env.yml
-      AUTH_CONFIG_FILE: config/product/opsman-auth.yml
+      ENV_FILE: config/environment/env.yml
+      AUTH_CONFIG_FILE: config/product/vars/opsman-auth.yml
 
 - name: install-director
   plan:
@@ -136,7 +136,7 @@ jobs:
         CREDHUB_SERVER: ((credhub-server))
         CREDHUB_CA_CERT: ((credhub-ca.certificate))
         PREFIX: '/'
-        INTERPOLATION_PATH: 'config/product'
+        INTERPOLATION_PATH: 'config/product/vars'
       input_mapping:
         files: pcf-aws-automation
       output_mapping:
@@ -148,11 +148,11 @@ jobs:
       input_mapping:
         config: pcf-aws-automation-interpolated
         env: pcf-aws-automation-interpolated
-        # vars: variable
+        vars: pcf-aws-automation-interpolated
       params:
-        # VARS_FILES: vars/((foundation))/vars/director-vars.yml
-        ENV_FILE: config/product/env.yml
-        DIRECTOR_CONFIG_FILE: config/product/director.yml
+        VARS_FILES: config/product/vars/director.yml
+        ENV_FILE: environment/env.yml
+        DIRECTOR_CONFIG_FILE: config/product/config/director.yml
 
 - name: store-staged-director-config
   serial: true
@@ -175,7 +175,7 @@ jobs:
       CREDHUB_SERVER: ((credhub-server))
       CREDHUB_CA_CERT: ((credhub-ca.certificate))
       PREFIX: '/'
-      INTERPOLATION_PATH: 'config/product'
+      INTERPOLATION_PATH: 'config/environment'
     input_mapping:
       files: pcf-aws-automation
     output_mapping:
@@ -187,7 +187,7 @@ jobs:
     input_mapping:
       env: pcf-aws-automation-interpolated
     params:
-      ENV_FILE: config/product/env.yml
+      ENV_FILE: config/environment/env.yml
 
   - task: make-commit
     image: pcf-automation-image

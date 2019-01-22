@@ -1,0 +1,11 @@
+---
+az1: eu-west-1a
+az2: eu-west-1b
+az3: eu-west-1c
+ntp_servers: .amazon.pool.ntp.org, 1.amazon.pool.ntp.org, 2.amazon.pool.ntp.org, 3.amazon.pool.ntp.org
+aws_access_key_id: ((/concourse/main/access_key_id))
+aws_secret_access_key: ((/concourse/main/secret_access_key))
+key_pair_name: pas-ops-manager-key
+region: eu-west-1
+security_group: sg-06bcfa0d0b87497e0
+ssh_private_key: ((/concourse/main/opsman_private_key.private_key))

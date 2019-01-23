@@ -7,7 +7,7 @@ aws_access_key_id: ((/concourse/main/access_key_id))
 aws_secret_access_key: ((/concourse/main/secret_access_key))
 key_pair_name: pas-ops-manager-key
 region: eu-west-1
-security_group: sg-06bcfa0d0b87497e0
+security_group: sg-03800e3ea5dfb97e8
 ssh_private_key: ((/concourse/main/opsman_private_key.private_key))
 network: pas-infrastructure-network
 singleton_az: eu-west-1a
@@ -15,21 +15,21 @@ singleton_az: eu-west-1a
 networks-configuration:
   - name: pas-infrastructure-network
     subnets:
-    - iaas_identifier: subnet-034ca56f8ae93f0b4
+    - iaas_identifier: subnet-088e544761c552c8a
       cidr: 10.0.16.0/28
       dns: 10.0.0.2
       gateway: 10.0.16.1
       reserved_ip_ranges: 10.0.16.0-10.0.16.4
       availability_zone_names:
       - eu-west-1a
-    - iaas_identifier: subnet-0fc636c9f475d39ee
+    - iaas_identifier: subnet-0f4e867b44fca0f03
       cidr: 10.0.16.16/28
       dns: 10.0.0.2
       gateway: 10.0.16.17
       reserved_ip_ranges: 10.0.16.16-10.0.16.20
       availability_zone_names:
       - eu-west-1b
-    - iaas_identifier: subnet-0c1947cc65519eeaf
+    - iaas_identifier: subnet-0805bbce17d6df679
       cidr: 10.0.16.32/28
       dns: 10.0.0.2
       gateway: 10.0.16.33
@@ -38,21 +38,21 @@ networks-configuration:
       - eu-west-1c
   - name: pas-ert-network
     subnets:
-    - iaas_identifier: subnet-060d8d806f7a9d814
+    - iaas_identifier: subnet-097844eecc7598fc5
       cidr: 10.0.4.0/24
       dns: 10.0.0.2
       gateway: 10.0.4.1
       reserved_ip_ranges: 10.0.4.0-10.0.4.4
       availability_zone_names:
       - eu-west-1a
-    - iaas_identifier: subnet-0dee92398b521bffb
+    - iaas_identifier: subnet-02bddcb8e7d2e02d4
       cidr: 10.0.5.0/24
       dns: 10.0.0.2
       gateway: 10.0.5.1
       reserved_ip_ranges: 10.0.5.0-10.0.5.4
       availability_zone_names:
       - eu-west-1b
-    - iaas_identifier: subnet-09cca90ff03251481
+    - iaas_identifier: subnet-0ebc3e2fe7fd37a47
       cidr: 10.0.6.0/24
       dns: 10.0.0.2
       gateway: 10.0.6.1
@@ -61,21 +61,21 @@ networks-configuration:
       - eu-west-1c
   - name: pas-services-network
     subnets:
-    - iaas_identifier: subnet-0cb3025ac5a512762
+    - iaas_identifier: subnet-0d94a67cc2088c157
       cidr: 10.0.8.0/24
       dns: 10.0.0.2
       gateway: 10.0.8.1
       reserved_ip_ranges: 10.0.8.0-10.0.8.4
       availability_zone_names:
       - eu-west-1a
-    - iaas_identifier: subnet-067e38bc7922faf27
+    - iaas_identifier: subnet-03df02e936cb909d6
       cidr: 10.0.9.0/24
       dns: 10.0.0.2
       gateway: 10.0.9.1
       reserved_ip_ranges: 10.0.9.0-10.0.9.4
       availability_zone_names:
       - eu-west-1b
-    - iaas_identifier: subnet-05d2915fda37923b5
+    - iaas_identifier: subnet-0aaccc9c219005bba
       cidr: 10.0.10.0/24
       dns: 10.0.0.2
       gateway: 10.0.10.1

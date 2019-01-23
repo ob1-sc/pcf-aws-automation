@@ -58,7 +58,7 @@ resources:
     secret_access_key: ((secret_access_key))
     region_name: ((aws_region))
     bucket: ((artifacts_bucket))
-    regexp: pcf-automation-tasks-(.*).zip
+    regexp: platform-automation-tasks-(.*).zip
 
 - name: pcf-automation-image
   type: s3
@@ -67,7 +67,7 @@ resources:
     secret_access_key: ((secret_access_key))
     region_name: ((aws_region))
     bucket: ((artifacts_bucket))
-    regexp: pcf-automation-image-(.*).tgz
+    regexp: platform-automation-image-(.*).tgz
 
 jobs:
 

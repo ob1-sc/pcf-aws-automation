@@ -1,10 +1,10 @@
 az-configuration:
 - name: eu-west-1a
-  iaas_configuration_guid: f1692d836934834ca409
+  iaas_configuration_guid: e0ca10972d6266181aab
 - name: eu-west-1b
-  iaas_configuration_guid: f1692d836934834ca409
+  iaas_configuration_guid: e0ca10972d6266181aab
 - name: eu-west-1c
-  iaas_configuration_guid: f1692d836934834ca409
+  iaas_configuration_guid: e0ca10972d6266181aab
 director-configuration:
   allow_legacy_agents: true
   blobstore_type: local

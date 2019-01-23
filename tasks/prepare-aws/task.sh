@@ -25,6 +25,8 @@ terraform plan \
   -var "vpc_cidr=${VPC_CIDR}" \
   -var "rds_instance_count=0" \
   -var "ops_manager_vm=${OPS_MANAGER_VM}" \
+  -var "ssl_cert=${SSL_CERT}" \
+  -var "ssl_private_key=${SSL_PRIVATE_KEY}" \
   -out terraform.tfplan \
   aws-terraform/terraforming-pas
 

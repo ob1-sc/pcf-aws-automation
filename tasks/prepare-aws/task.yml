@@ -25,5 +25,7 @@ params:
   DNS_SUFFIX:
   VPC_CIDR:
   OPS_MANAGER_VM:
+  SSL_CERT:
+  SSL_PRIVATE_KEY:
 run:
   path: pcf-aws-automation/tasks/prepare-aws/task.sh

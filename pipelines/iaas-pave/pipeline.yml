@@ -99,6 +99,8 @@ jobs:
       DNS_SUFFIX: ((dns_suffix))
       VPC_CIDR: ((vpc_cidr))
       OPS_MANAGER_VM: ((ops_manager_vm))
+      SSL_CERT: ((ssl_cert))
+      SSL_PRIVATE_KEY: ((ssl_private_key))
     ensure:
       params:
         file: terraform-state-output/terraform.tfstate

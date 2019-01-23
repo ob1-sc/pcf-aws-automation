@@ -25,7 +25,25 @@ resources:
     bucket: ((artifacts_bucket))
     regexp: OpsManager(.*)onAWS.yml
 
-- name: platform-automation-pivnet
+- name: pas-product
+  type: s3
+  source:
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
+    region_name: ((aws_region))
+    bucket: ((artifacts_bucket))
+    regexp: cf-(.*).pivotal
+
+- name: pas-stemcell
+  type: s3
+  source:
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
+    region_name: ((aws_region))
+    bucket: ((artifacts_bucket))
+    regexp: pas-stemcell/bosh-stemcell-(.*)-vsphere.*\.tgz
+
+- name: pcf-automation-pivnet
   type: pivnet
   source:
     api_token: ((pivnet-token))
@@ -33,39 +51,39 @@ resources:
     product_version: 1\.(.*) # pin to major version 1
     sort_by: semver
 
-- name: platform-automation-tasks
+- name: pcf-automation-tasks
   type: s3
   source:
     access_key_id: ((access_key_id))
     secret_access_key: ((secret_access_key))
     region_name: ((aws_region))
     bucket: ((artifacts_bucket))
-    regexp: platform-automation-tasks-(.*).zip
+    regexp: pcf-automation-tasks-(.*).zip
 
-- name: platform-automation-image
+- name: pcf-automation-image
   type: s3
   source:
     access_key_id: ((access_key_id))
     secret_access_key: ((secret_access_key))
     region_name: ((aws_region))
     bucket: ((artifacts_bucket))
-    regexp: platform-automation-image-(.*).tgz
+    regexp: pcf-automation-image-(.*).tgz
 
 jobs:
 
-- name: fetch-opsman
+- name: fetch-pas
   plan:
   - aggregate:
-    - get: platform-automation-image
+    - get: pcf-automation-image
       params:
         unpack: true
-    - get: platform-automation-tasks
+    - get: pcf-automation-tasks
       params:
         unpack: true
     - get: pcf-aws-automation
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
     params:
       CREDHUB_CLIENT: ((credhub-client))
       CREDHUB_SECRET: ((credhub-secret))
@@ -76,28 +94,67 @@ jobs:
     input_mapping:
       files: pcf-aws-automation
     output_mapping:
-      interpolated-files: pcf-aws-automation
+      interpolated-files: pcf-aws-automation-interpolated
+  - task: download-pas-product-and-stemcell
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/download-product.yml
+    params:
+      CONFIG_FILE: config/pivnet/pas.yml
+    input_mapping:
+      config: pcf-aws-automation-interpolated
+    output_mapping:
+      downloaded-stemcell: pas-stemcell
+  - aggregate:
+    - put: pas-product
+      params:
+        file: downloaded-product/*.pivotal
+    - put: pas-stemcell
+      params:
+        file: pas-stemcell/*.tgz
+
+- name: fetch-opsman
+  plan:
+  - aggregate:
+    - get: pcf-automation-image
+      params:
+        unpack: true
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-aws-automation
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/pivnet'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: pcf-aws-automation-interpolated
   - task: download-opsman-image
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/download-product.yml
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/download-product.yml
     params:
       CONFIG_FILE: config/pivnet/opsman.yml
     input_mapping:
-      config: pcf-aws-automation
+      config: pcf-aws-automation-interpolated
   - aggregate:
     - put: opsman-product
       params:
         file: downloaded-product/*
 
 - name: fetch-platform-automation
-  # We use the pivnet resource to bootstrap the pipeline,
-  # and because this product is part of the pipeline, not the foundation
   plan:
-  - get: platform-automation-pivnet
+  - get: pcf-automation-pivnet
   - aggregate:
-    - put: platform-automation-tasks
+    - put: pcf-automation-tasks
       params:
-        file: platform-automation-pivnet/*tasks*.zip
-    - put: platform-automation-image
+        file: pcf-automation-pivnet/*tasks*.zip
+    - put: pcf-automation-image
       params:
-        file: platform-automation-pivnet/*image*.tgz
+        file: pcf-automation-pivnet/*image*.tgz

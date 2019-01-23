@@ -37,6 +37,24 @@ resources:
     bucket: ((artifacts_bucket))
     regexp: OpsManager(.*)onAWS.yml
 
+- name: pas-stemcell
+  type: s3
+  source:
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
+    region_name: ((aws_region))
+    bucket: ((artifacts_bucket))
+    regexp: pas-stemcell/light-bosh-stemcell-(.*)-vsphere.*\.tgz
+
+- name: pas-product
+  type: s3
+  source:
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
+    region_name: ((aws_region))
+    bucket: ((artifacts_bucket))
+    regexp: cf-(.*).pivotal
+
 # configurations
 - name: pcf-aws-automation
   type: git
@@ -252,3 +270,92 @@ jobs:
     params:
       repository: configuration-commit
       merge: true
+
+- name: upload-and-stage-pas
+  serial: true
+  plan:
+  - aggregate:
+    - get: pcf-automation-image
+      params:
+        unpack: true
+      passed:
+      - store-staged-director-config
+      trigger: true
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-aws-automation
+    - get: pas-product
+
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/environment'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: env-interpolated
+
+  - task: upload-product
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/upload-product.yml
+    input_mapping:
+      product: pas-product
+      env: env-interpolated
+    params:
+      ENV_FILE: config/environment/env.yml
+
+  - task: stage-product
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/stage-product.yml
+    input_mapping:
+      product: pas-product
+      env: env-interpolated
+    params:
+      ENV_FILE: config/environment/env.yml
+
+- name: upload-stemcell
+  serial: true
+  plan:
+  - aggregate:
+    - get: pcf-automation-image
+      params:
+        unpack: true
+      passed:
+      - upload-and-stage-pas
+      trigger: true
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-aws-automation
+    - get: pas-stemcell
+
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/environment'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: env-interpolated
+
+  - task: upload-pas-stemcell
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/upload-stemcell.yml
+    input_mapping:
+      env: env-interpolated
+      stemcell: pas-stemcell
+    params:
+      ENV_FILE: config/environment/env.yml

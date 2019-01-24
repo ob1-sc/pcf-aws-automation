@@ -359,3 +359,60 @@ jobs:
       stemcell: pas-stemcell
     params:
       ENV_FILE: config/environment/env.yml
+
+- name: configure-pas
+  serial: true
+  plan:
+  - aggregate:
+    - get: pcf-automation-image
+      params:
+        unpack: true
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-aws-automation
+
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/product/vars'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: pcf-aws-automation-interpolated
+
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/environment'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: env-interpolated
+
+  - task: configure-pas
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: pcf-aws-automation
+      env: env-interpolated
+      vars: pcf-aws-automation-interpolated
+    params:
+      VARS_FILES: vars/config/product/vars/pas.yml
+      ENV_FILE: config/environment/env.yml
+      CONFIG_FILE: config/product/config/pas.yml

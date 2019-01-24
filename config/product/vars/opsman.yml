@@ -6,11 +6,11 @@ opsman-configuration:
     region: eu-west-1
     vm_name: ops-manager-vm                           # default: OpsManager-vm
     boot_disk_size: 100                               # default 200
-    vpc_subnet_id: subnet-0e4240079f797e99e
-    security_group_id: sg-01743ab39ea22a859
+    vpc_subnet_id: subnet-0258d6e5b4df41d8c # pas-public-subnet-az0
+    security_group_id: sg-0ddff45352a1699af # pas-ops-manager-security-group
     key_pair_name: pas-ops-manager-key
     iam_instance_profile_name: pas_ops_manager
     instance_type: r4.large
     # At least one IP address (public or private) needs to be assigned to the VM.
-    public_ip: 34.242.195.157
+    public_ip: 63.33.178.173 # pas-om-eip
     # private_ip: 10.0.0.2

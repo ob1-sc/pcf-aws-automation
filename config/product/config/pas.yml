@@ -125,8 +125,8 @@ product-properties:
   #   value: ECDHE-RSA-AES128-GCM-SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
   # .properties.haproxy_client_cert_validation:
   #   value: none
-  # .properties.haproxy_forward_tls:
-  #   value: disable
+  .properties.haproxy_forward_tls:
+    value: disable
   # .properties.haproxy_hsts_support:
   #   value: disable
   # .properties.haproxy_max_buffer_size:
@@ -340,7 +340,7 @@ resource-config:
   #     id: automatic
   #   internet_connected: false
   diego_brain:
-    instances: automatic
+    # instances: automatic
     # instance_type:
     #   id: automatic
     # internet_connected: false
@@ -402,7 +402,7 @@ resource-config:
   #   internet_connected: false
   router:
     instances: automatic
-    # instance_type:
+    instance_type:
     #   id: automatic
     # internet_connected: false
     elb_names: ((pas_router_lb_names))

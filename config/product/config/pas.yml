@@ -219,9 +219,9 @@ product-properties:
     value:
       secret: ((pas_blobstore_s3_access_key_secret))
   .properties.system_blobstore.external.buildpacks_bucket:
-    value: ((pas_buildpacks_packages))
+    value: ((pas_bucket_buildpacks))
   .properties.system_blobstore.external.droplets_bucket:
-    value: ((pas_droplets_packages))
+    value: ((pas_bucket_droplets))
   .properties.system_blobstore.external.encryption:
     value: false
   .properties.system_blobstore.external.endpoint:

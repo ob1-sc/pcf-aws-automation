@@ -44,7 +44,7 @@ resources:
     secret_access_key: ((secret_access_key))
     region_name: ((aws_region))
     bucket: ((artifacts_bucket))
-    regexp: pas-stemcell/light-bosh-stemcell-(.*)-vsphere.*\.tgz
+    regexp: pas-stemcell/light-bosh-stemcell-(.*)-aws.*\.tgz
 
 - name: pas-product
   type: s3

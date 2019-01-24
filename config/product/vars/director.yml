@@ -8,7 +8,7 @@ aws_secret_access_key: ((/concourse/main/secret_access_key))
 key_pair_name: pas-ops-manager-key
 region: eu-west-1
 security_group: sg-0aba8673819e9b771 # pas-vms-security-group
-ssh_private_key: ((/concourse/main/opsman_private_key.private_key))
+ssh_private_key: ((/concourse/main/opsman_private_key.private_key)) # make sure this is updated following re-deploy of ops man
 network: pas-infrastructure-network
 singleton_az: eu-west-1a
 

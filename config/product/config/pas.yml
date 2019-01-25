@@ -60,9 +60,9 @@ network-properties:
 resource-config:
   diego_brain:
     elb_names: ((pas_diego_brain_lb_names))
-    # additional_vm_extensions: ((pas_diego_brain_additional_vm_extensions))
+    additional_vm_extensions: ((pas_diego_brain_additional_vm_extensions))
   router:
     # instances: automatic
     # instance_type:
     elb_names: ((pas_router_lb_names))
-    # additional_vm_extensions: ((pas_router_additional_vm_extensions))
+    additional_vm_extensions: ((pas_router_additional_vm_extensions))

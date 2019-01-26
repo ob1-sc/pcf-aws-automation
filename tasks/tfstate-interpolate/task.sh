@@ -4,12 +4,19 @@ set -u
 set -o pipefail
 #set -x
 
-files=$(cd files && find $INTERPOLATION_PATH -type f -name '*.yml' -follow)
+# setup texplate
+texplate_bin=$(ls ./texplate/texplate*)
+chmod +x $texplate_bin
 
-echo $files
+# setup jq
+jq_bin=$(ls ./jq/jq*)
+chmod +x $jq_bin
+
+# get all the files to interpolate
+files=$(cd files && find $INTERPOLATION_PATH -type f -name '*.yml' -follow)
 
 for file in $files; do
   echo "interpolating files/$file"
   mkdir -p interpolated-files/"$(dirname "$file")"
-  # credhub interpolate --prefix "$PREFIX" --file files/"$file" > interpolated-files/"$file"
+  $texplate_bin execute files/"$file" -f <($jq_bin -e --raw-output '.modules[0].outputs | map_values(.value)' ./tf_state/terraform.tfstate) -o yaml > interpolated-files/"$file"
 done

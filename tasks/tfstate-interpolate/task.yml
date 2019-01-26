@@ -5,6 +5,7 @@ inputs:
 - name: tf_state
 - name: tasks # contains the product configuration file
 - name: texplate
+- name: jq
 - name: files
 
 outputs:

@@ -1,5 +1,8 @@
 ---
 platform: linux
 
+inputs:
+- name: tasks # contains the product configuration file
+
 run:
-  path: pcf-aws-automation/tasks/tfstate-interpolate/task.sh
+  path: tasks/tasks/tfstate-interpolate/task.sh

@@ -408,6 +408,8 @@ jobs:
   - task: tfstate-interpolate
     image: pcf-automation-image
     file: pcf-aws-automation/tasks/tfstate-interpolate/task.yml
+    input_mapping:
+      tasks: pcf-aws-automation
 
   - task: configure-pas
     image: pcf-automation-image

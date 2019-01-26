@@ -429,18 +429,20 @@ jobs:
     image: pcf-automation-image
     file: pcf-aws-automation/tasks/tfstate-interpolate/task.yml
     input_mapping:
-      tf_state: tf_state
+      tf_state: tf-state
       tasks: pcf-aws-automation
       texplate: tools-texplate
       files: pcf-aws-automation
     params:
       INTERPOLATION_PATH: config/product/config/pas.yml
+    output_mapping:
+      interpolated-files: config-interpolated
 
   - task: configure-pas
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml
     input_mapping:
-      config: pcf-aws-automation
+      config: config-interpolated
       env: env-interpolated
       vars: pcf-aws-automation-interpolated
     params:

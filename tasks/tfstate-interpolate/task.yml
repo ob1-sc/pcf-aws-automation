@@ -2,8 +2,21 @@
 platform: linux
 
 inputs:
+- name: tfstate
 - name: tasks # contains the product configuration file
 - name: texplate
+- name: files
+
+outputs:
+- name: interpolated-files
+
+#contains all the *.yml files from `files/` input but after interpolation
+# all params are required to be filled out
+params:
+  # path the contains the files to read from
+  # this is a space separated list of directories
+  # the paths are all evaluated relative to files/
+  INTERPOLATION_PATH: '.'
 
 run:
   path: tasks/tasks/tfstate-interpolate/task.sh

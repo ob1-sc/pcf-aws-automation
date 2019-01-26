@@ -4,8 +4,12 @@ set -u
 set -o pipefail
 #set -x
 
-# Get the current directory that the script is running in
-export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+files=$(cd files && find $INTERPOLATION_PATH -type f -name '*.yml' -follow)
 
-echo "Hello World"
-echo "Script Dir: $SCRIPT_DIR"
+echo $files
+
+for file in $files; do
+  echo "interpolating files/$file"
+  mkdir -p interpolated-files/"$(dirname "$file")"
+  # credhub interpolate --prefix "$PREFIX" --file files/"$file" > interpolated-files/"$file"
+done

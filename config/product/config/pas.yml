@@ -1,9 +1,9 @@
 product-name: cf
 product-properties:
   .cloud_controller.apps_domain:
-    value: ((pas_apps_domain))
+    value: {{.apps_domain}}
   .cloud_controller.system_domain:
-    value: ((pas_sys_domain))
+    value: {{.apps_domain}}
   .ha_proxy.skip_cert_verify:
     value: ((pas_skip_cert_verify))
   .mysql_monitor.recipient_email:
@@ -20,8 +20,10 @@ product-properties:
   .properties.networking_poe_ssl_certs:
     value:
     - certificate:
-        cert_pem: ((pas_network_poe_cert))
-        private_key_pem: ((pas_network_poe_private))
+        cert_pem: |
+{{indent 10 .ssl_cert}}
+        private_key_pem: |
+{{indent 10 .ssl_private_key}}
       name: Certificate
   .properties.security_acknowledgement:
     value: X
@@ -46,23 +48,38 @@ product-properties:
     value: ((pas_bucket_resources))
   .uaa.service_provider_key_credentials:
     value:
-        cert_pem: ((pas_uaa_cert))
-        private_key_pem: ((pas_uaa_private))
+      cert_pem: |
+{{indent 8 .ssl_cert}}
+      private_key_pem: |
+{{indent 8 .ssl_private_key}}
 network-properties:
   network:
     name: ((pas_network))
   other_availability_zones:
-  - name: ((pas_az1))
-  - name: ((pas_az2))
-  - name: ((pas_az3))
+    {{range .azs}}
+    - name: {{.}}
+    {{end}}
   singleton_availability_zone:
-    name: ((pas_singleton_az))
+    name: {{index .azs 0}}
 resource-config:
   diego_brain:
-    elb_names: ((pas_diego_brain_lb_names))
-    additional_vm_extensions: ((pas_diego_brain_additional_vm_extensions))
+    elb_names:
+    {{range .ssh_target_groups}}
+    - alb:{{.}}
+    {{end}}
+    additional_vm_extensions:
+    - ssh-lb-security-groups
   router:
-    # instances: automatic
-    # instance_type:
-    elb_names: ((pas_router_lb_names))
-    additional_vm_extensions: ((pas_router_additional_vm_extensions))
+    elb_names:
+    {{range .web_target_groups}}
+    - alb:{{.}}
+    {{end}}
+    additional_vm_extensions:
+    - web-lb-security-groups
+  tcp_router:
+    elb_names:
+    {{range .tcp_target_groups}}
+    - alb:{{.}}
+    {{end}}
+    additional_vm_extensions:
+    - tcp-lb-security-groups

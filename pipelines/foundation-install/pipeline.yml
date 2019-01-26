@@ -1,6 +1,15 @@
 ---
 resources:
 
+- name: tools-texplate
+  type: s3
+  source:
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
+    region_name: ((aws_region))
+    bucket: ((artifacts_bucket))
+    regexp: tools/texplate
+
 - name: pcf-automation-tasks
   type: s3
   source:
@@ -374,6 +383,7 @@ jobs:
       params:
         unpack: true
     - get: pcf-aws-automation
+    - get: tools-texplate
 
   - task: credhub-interpolate
     image: pcf-automation-image
@@ -410,6 +420,7 @@ jobs:
     file: pcf-aws-automation/tasks/tfstate-interpolate/task.yml
     input_mapping:
       tasks: pcf-aws-automation
+      texplate: tools-texplate
 
   - task: configure-pas
     image: pcf-automation-image

@@ -1,0 +1,5 @@
+---
+platform: linux
+
+run:
+  path: pcf-aws-automation/tasks/tfstate-interpolate/task.sh

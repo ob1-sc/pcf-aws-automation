@@ -393,6 +393,7 @@ jobs:
         unpack: true
     - get: pcf-aws-automation
     - get: tools-texplate
+    - get: tf-state
 
   - task: credhub-interpolate
     image: pcf-automation-image
@@ -433,7 +434,6 @@ jobs:
       texplate: tools-texplate
       files: pcf-aws-automation
     params:
-      CONFIG_FILE: config/product/config/pas.yml
       INTERPOLATION_PATH: config/product/config/pas.yml
 
   - task: configure-pas

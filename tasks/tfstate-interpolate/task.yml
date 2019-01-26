@@ -2,7 +2,7 @@
 platform: linux
 
 inputs:
-- name: tfstate
+- name: tf_state
 - name: tasks # contains the product configuration file
 - name: texplate
 - name: files

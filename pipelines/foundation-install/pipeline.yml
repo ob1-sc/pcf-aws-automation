@@ -19,6 +19,15 @@ resources:
     bucket: ((artifacts_bucket))
     regexp: tools/texplate-(.*)
 
+- name: tools-jq
+  type: s3
+  source:
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
+    region_name: ((aws_region))
+    bucket: ((artifacts_bucket))
+    regexp: tools/jq-(.*)
+
 - name: pcf-automation-tasks
   type: s3
   source:
@@ -393,6 +402,7 @@ jobs:
         unpack: true
     - get: pcf-aws-automation
     - get: tools-texplate
+    - get: tools-jq
     - get: tf-state
 
   - task: credhub-interpolate
@@ -432,6 +442,7 @@ jobs:
       tf_state: tf-state
       tasks: pcf-aws-automation
       texplate: tools-texplate
+      jq: tools-jq
       files: pcf-aws-automation
     params:
       INTERPOLATION_PATH: config/product/config/pas.yml

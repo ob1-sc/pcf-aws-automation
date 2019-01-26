@@ -9,10 +9,8 @@ inputs:
 - name: files
 
 outputs:
-- name: interpolated-files
+- name: interpolated-files # contains all the *.yml files from `files/` input but after interpolation
 
-#contains all the *.yml files from `files/` input but after interpolation
-# all params are required to be filled out
 params:
   # path the contains the files to read from
   # this is a space separated list of directories

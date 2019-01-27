@@ -1,65 +1,24 @@
 az-configuration:
-- name: ((az1))
-- name: ((az2))
-- name: ((az3))
+- name: {{index .azs 0}}
+- name: {{index .azs 1}}
+- name: {{index .azs 2}}
 director-configuration:
-  # allow_legacy_agents: true
-  # blobstore_type: local
-  # bosh_recreate_on_next_deploy: false
-  # bosh_recreate_persistent_disks_on_next_deploy: false
-  # database_type: internal
-  # director_worker_count: 5
-  # encryption:
-  #   keys: []
-  #   providers: []
-  # hm_emailer_options:
-  #   enabled: false
-  # hm_pager_duty_options:
-  #   enabled: false
-  # identification_tags: {}
-  # keep_unreachable_vms: false
-  # local_blobstore_options:
-  #   tls_enabled: true
   ntp_servers_string: ((ntp_servers))
-  # post_deploy_enabled: false
-  # resurrector_enabled: false
-  # retry_bosh_deploys: false
-  # skip_director_drain: true
 iaas-configuration:
   access_type: aws-keys
-  # encrypted: false
   access_key_id: ((aws_access_key_id))
   secret_access_key: ((aws_secret_access_key))
-  key_pair_name: ((key_pair_name))
-  region: ((region))
-  security_group: ((security_group))
-  ssh_private_key: ((ssh_private_key))
+  key_pair_name: {{.ops_manager_ssh_public_key_name}}
+  region: {{.region}}
+  security_group: {{.vms_security_group_id}}
+  ssh_private_key: |
+{{indent 4 .ops_manager_ssh_private_key}}
 network-assignment:
   network:
-    name: ((network))
-  other_availability_zones: []
+    name: pas-infrastructure-network
+  # other_availability_zones: []
   singleton_availability_zone:
-    name: ((singleton_az))
+    name: {{index .azs 0}}
 networks-configuration:
-  icmp_checks_enabled: false
+  # icmp_checks_enabled: false
   networks: ((networks-configuration))
-# resource-configuration:
-#   compilation:
-#     instances: automatic
-#     instance_type:
-#       id: automatic
-#     internet_connected: false
-#   director:
-#     instances: automatic
-#     persistent_disk:
-#       size_mb: automatic
-#     instance_type:
-#       id: automatic
-#     internet_connected: false
-# security-configuration:
-#   generate_vm_passwords: true
-#   opsmanager_root_ca_trusted_certs: true
-# syslog-configuration:
-#   enabled: false
-# vmextensions-configuration: []
-

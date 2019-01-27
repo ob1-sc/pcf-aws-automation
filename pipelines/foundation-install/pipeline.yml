@@ -180,67 +180,84 @@ jobs:
 - name: install-director
   serial: true
   plan:
-    - aggregate:
-      - get: pcf-automation-image
-        params:
-          unpack: true
-        passed:
-        - install-opsman
-        trigger: true
-      - get: pcf-automation-tasks
-        params:
-          unpack: true
-      - get: pcf-aws-automation
-
-    - task: credhub-interpolate
-      image: pcf-automation-image
-      file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+  - aggregate:
+    - get: pcf-automation-image
       params:
-        CREDHUB_CLIENT: ((credhub-client))
-        CREDHUB_SECRET: ((credhub-secret))
-        CREDHUB_SERVER: ((credhub-server))
-        CREDHUB_CA_CERT: ((credhub-ca.certificate))
-        PREFIX: '/'
-        INTERPOLATION_PATH: 'config/product/vars'
-      input_mapping:
-        files: pcf-aws-automation
-      output_mapping:
-        interpolated-files: pcf-aws-automation-interpolated
-
-    - task: credhub-interpolate
-      image: pcf-automation-image
-      file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+        unpack: true
+      passed:
+      - install-opsman
+      trigger: true
+    - get: pcf-automation-tasks
       params:
-        CREDHUB_CLIENT: ((credhub-client))
-        CREDHUB_SECRET: ((credhub-secret))
-        CREDHUB_SERVER: ((credhub-server))
-        CREDHUB_CA_CERT: ((credhub-ca.certificate))
-        PREFIX: '/'
-        INTERPOLATION_PATH: 'config/environment'
-      input_mapping:
-        files: pcf-aws-automation
-      output_mapping:
-        interpolated-files: env-interpolated
+        unpack: true
+    - get: pcf-aws-automation
+    - get: tools-texplate
+    - get: tools-jq
+    - get: tf-state
 
-    - task: configure-director
-      image: pcf-automation-image
-      file: pcf-automation-tasks/tasks/configure-director.yml
-      input_mapping:
-        config: pcf-aws-automation
-        env: env-interpolated
-        vars: pcf-aws-automation-interpolated
-      params:
-        VARS_FILES: vars/config/product/vars/director.yml
-        ENV_FILE: config/environment/env.yml
-        DIRECTOR_CONFIG_FILE: config/product/config/director.yml
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/product/vars'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: pcf-aws-automation-interpolated
 
-    - task: apply-director-changes
-      image: pcf-automation-image
-      file: pcf-automation-tasks/tasks/apply-director-changes.yml
-      input_mapping:
-        env: env-interpolated
-      params:
-        ENV_FILE: config/environment/env.yml
+  - task: credhub-interpolate
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CA_CERT: ((credhub-ca.certificate))
+      PREFIX: '/'
+      INTERPOLATION_PATH: 'config/environment'
+    input_mapping:
+      files: pcf-aws-automation
+    output_mapping:
+      interpolated-files: env-interpolated
+
+  - task: tfstate-interpolate
+    image: pcf-automation-image
+    file: pcf-aws-automation/tasks/tfstate-interpolate/task.yml
+    input_mapping:
+      tf_state: tf-state
+      tasks: pcf-aws-automation
+      texplate: tools-texplate
+      jq: tools-jq
+      files: pcf-aws-automation
+    params:
+      INTERPOLATION_PATH: config/product/config/director.yml
+    output_mapping:
+      interpolated-files: config-interpolated
+
+  - task: configure-director
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/configure-director.yml
+    input_mapping:
+      config: config-interpolated
+      env: env-interpolated
+      vars: pcf-aws-automation-interpolated
+    params:
+      VARS_FILES: vars/config/product/vars/director.yml
+      ENV_FILE: config/environment/env.yml
+      DIRECTOR_CONFIG_FILE: config/product/config/director.yml
+
+  - task: apply-director-changes
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/apply-director-changes.yml
+    input_mapping:
+      env: env-interpolated
+    params:
+      ENV_FILE: config/environment/env.yml
 
 - name: store-staged-director-config
   plan:

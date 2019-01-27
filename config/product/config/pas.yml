@@ -35,17 +35,18 @@ product-properties:
     value:
       secret: ((pas_blobstore_s3_access_key_secret))
   .properties.system_blobstore.external.buildpacks_bucket:
-    value: ((pas_bucket_buildpacks))
+    value: {{.pas_buildpacks_bucket}}
   .properties.system_blobstore.external.droplets_bucket:
-    value: ((pas_bucket_droplets))
+    value: {{.pas_droplets_bucket}}
   .properties.system_blobstore.external.endpoint:
-    value: ((pas_blobstore_s3_endpoint))
+    value: https://s3.{{.region}}.amazonaws.com
+    # value: ((pas_blobstore_s3_endpoint))
   .properties.system_blobstore.external.packages_bucket:
-    value: ((pas_bucket_packages))
+    value: {{.pas_packages_bucket}}
   .properties.system_blobstore.external.region:
-    value: ((pas_blobstore_s3_region))
+    value: {{.region}}
   .properties.system_blobstore.external.resources_bucket:
-    value: ((pas_bucket_resources))
+    value: {{.pas_resources_bucket}}
   .uaa.service_provider_key_credentials:
     value:
       cert_pem: |
@@ -54,7 +55,7 @@ product-properties:
 {{indent 8 .ssl_private_key}}
 network-properties:
   network:
-    name: ((pas_network))
+    name: pas-ert-network
   other_availability_zones:
     {{range .azs}}
     - name: {{.}}

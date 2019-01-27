@@ -4,30 +4,3 @@ pas_mysql_email: siobrien@pivotal.io
 pas_credhub_key: ((/concourse/main/pas_credhub_key))
 pas_blobstore_s3_access_key_id: ((/concourse/main/access_key_id))
 pas_blobstore_s3_access_key_secret: ((/concourse/main/secret_access_key))
-# pas_bucket_buildpacks: pas-buildpacks-bucket-61866
-# pas_bucket_droplets: pas-droplets-bucket-61866
-# pas_bucket_resources: pas-resources-bucket-61866
-# pas_bucket_packages: pas-packages-bucket-61866
-# pas_blobstore_s3_endpoint: https://s3.eu-west-1.amazonaws.com
-# pas_blobstore_s3_region: eu-west-1
-# pas_network: pas-ert-network
-
-# pas_network_poe_cert: ((/concourse/main/pas_network_poe.certificate))
-# pas_network_poe_private: ((/concourse/main/pas_network_poe.private_key))
-# pas_uaa_cert: ((/concourse/main/pas_uaa.certificate))
-# pas_uaa_private: ((/concourse/main/pas_uaa.private_key))
-# pas_az1: eu-west-1a
-# pas_az2: eu-west-1b
-# pas_az3: eu-west-1c
-# pas_singleton_az: eu-west-1a
-# pas_router_lb_names:
-# - alb:pas-web-tg-80
-# - alb:pas-web-tg-443
-# pas_router_additional_vm_extensions:
-# - web-lb-security-groups
-# pas_diego_brain_lb_names:
-# - alb:pas-ssh-tg
-# pas_diego_brain_additional_vm_extensions:
-# - ssh-lb-security-groups
-# pas_sys_domain: sys.pas.aws.siob.me
-# pas_apps_domain: apps.pas.aws.siob.me

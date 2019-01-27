@@ -3,6 +3,7 @@ ntp_servers: 0.amazon.pool.ntp.org, 1.amazon.pool.ntp.org, 2.amazon.pool.ntp.org
 aws_access_key_id: ((/concourse/main/access_key_id))
 aws_secret_access_key: ((/concourse/main/secret_access_key))
 
+# TODO: move networks-configuration back into product/config/director.yml and tf interpolate values
 networks-configuration:
   - name: pas-infrastructure-network
     subnets:

@@ -1,10 +1,10 @@
 az-configuration:
 - name: eu-west-1a
-  iaas_configuration_guid: aa50cd186705b3de6272
+  iaas_configuration_guid: b4e5a24a28b4a2c35058
 - name: eu-west-1b
-  iaas_configuration_guid: aa50cd186705b3de6272
+  iaas_configuration_guid: b4e5a24a28b4a2c35058
 - name: eu-west-1c
-  iaas_configuration_guid: aa50cd186705b3de6272
+  iaas_configuration_guid: b4e5a24a28b4a2c35058
 director-configuration:
   allow_legacy_agents: true
   blobstore_type: local
@@ -132,23 +132,8 @@ resource-configuration:
     internet_connected: false
 security-configuration:
   generate_vm_passwords: true
-  opsmanager_root_ca_trusted_certs: true
+  opsmanager_root_ca_trusted_certs: false
 syslog-configuration:
   enabled: false
-vmextensions-configuration:
-- name: web-lb-security-groups
-  cloud_properties:
-    security_groups:
-    - web_lb_security_group
-    - vms_security_group
-- name: ssh-lb-security-groups
-  cloud_properties:
-    security_groups:
-    - ssh_lb_security_group
-    - vms_security_group
-- name: tcp-lb-security-groups
-  cloud_properties:
-    security_groups:
-    - tcp_lb_security_group
-    - vms_security_group
+vmextensions-configuration: []
 

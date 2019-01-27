@@ -17,9 +17,7 @@ iaas-configuration:
 network-assignment:
   network:
     name: pas-infrastructure-network
-  # other_availability_zones: []
   singleton_availability_zone:
     name: {{index .azs 0}}
 networks-configuration:
-  # icmp_checks_enabled: false
   networks: ((networks-configuration))

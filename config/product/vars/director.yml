@@ -1,16 +1,7 @@
 ---
-# az1: eu-west-1a
-# az2: eu-west-1b
-# az3: eu-west-1c
 ntp_servers: 0.amazon.pool.ntp.org, 1.amazon.pool.ntp.org, 2.amazon.pool.ntp.org, 3.amazon.pool.ntp.org
 aws_access_key_id: ((/concourse/main/access_key_id))
 aws_secret_access_key: ((/concourse/main/secret_access_key))
-# key_pair_name: pas-ops-manager-key
-# region: eu-west-1
-# security_group: sg-0aba8673819e9b771 # pas-vms-security-group
-# ssh_private_key: ((/concourse/main/opsman_private_key.private_key)) # make sure this is updated following re-deploy of ops man
-# network: pas-infrastructure-network
-# singleton_az: eu-west-1a
 
 networks-configuration:
   - name: pas-infrastructure-network

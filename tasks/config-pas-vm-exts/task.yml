@@ -1,0 +1,14 @@
+---
+platform: linux
+
+inputs:
+- name: env   # contains the env file with target OpsMan Information
+- name: tasks # contains the product configuration file
+
+params:
+  ENV_FILE: env.yml
+  # - Filepath of the env config YAML
+  # - The path is relative to root of the `env` input
+
+run:
+  path: tasks/tasks/config-pas-vm-exts/task.sh

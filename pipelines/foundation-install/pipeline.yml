@@ -449,6 +449,15 @@ jobs:
     output_mapping:
       interpolated-files: config-interpolated
 
+  - task: configure-pas-vm-exts
+    image: pcf-automation
+    file: pcf-aws-automation/tasks/config-pas-vm-exts/task.yml
+    input_mapping:
+      env: env-interpolated
+      tasks: pcf-aws-automation
+    params:
+      ENV_FILE: config/environment/env.yml
+
   - task: configure-pas
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml

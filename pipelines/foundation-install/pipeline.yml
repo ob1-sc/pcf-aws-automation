@@ -46,15 +46,6 @@ resources:
     bucket: ((artifacts_bucket))
     regexp: .*image-(.*).tgz
 
-# - name: installation
-#   type: s3
-#   source:
-#     access_key_id: ((s3.access_key_id))
-#     bucket: ((s3.buckets.installation))
-#     region_name: ((s3.region_name))
-#     secret_access_key: ((s3.secret_access_key))
-#     versioned_file: installation.zip
-
 - name: opsman-image
   type: s3
   source:
@@ -82,7 +73,6 @@ resources:
     bucket: ((artifacts_bucket))
     regexp: cf-(.*).pivotal
 
-# configurations
 - name: pcf-aws-automation
   type: git
   source:
@@ -104,6 +94,9 @@ jobs:
         unpack: true
     - get: opsman-image
     - get: pcf-aws-automation
+    - get: tools-texplate
+    - get: tools-jq
+    - get: tf-state
 
   - task: credhub-interpolate
     image: pcf-automation-image
@@ -135,17 +128,33 @@ jobs:
     output_mapping:
       interpolated-files: env-interpolated
 
+  - task: tfstate-interpolate
+    image: pcf-automation-image
+    file: pcf-aws-automation/tasks/tfstate-interpolate/task.yml
+    input_mapping:
+      tf_state: tf-state
+      tasks: pcf-aws-automation
+      texplate: tools-texplate
+      jq: tools-jq
+      files: pcf-aws-automation
+    params:
+      INTERPOLATION_PATH: config/product/config/opsman.yml
+    output_mapping:
+      interpolated-files: config-interpolated
+
   - task: create-vm
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/create-vm.yml
     input_mapping:
       image: opsman-image
       state: pcf-aws-automation
-      config: pcf-aws-automation-interpolated
+      config: config-interpolated
+      vars: pcf-aws-automation-interpolated
     params:
-      OPSMAN_CONFIG_FILE: config/product/vars/opsman.yml
+      OPSMAN_CONFIG_FILE: config/product/config/opsman.yml
+      VARS_FILES: vars/config/product/vars/opsman.yml
       STATE_FILE: state/opsman.yml
-    ensure: &make-state-commit
+    ensure:
       do:
         - task: make-commit
           image: pcf-automation-image

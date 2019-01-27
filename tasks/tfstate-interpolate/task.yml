@@ -2,11 +2,11 @@
 platform: linux
 
 inputs:
-- name: tf_state
-- name: tasks # contains the product configuration file
-- name: texplate
-- name: jq
-- name: files
+- name: tf_state  # contains the terraform state file
+- name: tasks     # contains the product configuration file
+- name: texplate  # contains the texplate binary
+- name: jq        # contains the jq binary
+- name: files     # contains the files to interpolate
 
 outputs:
 - name: interpolated-files # contains all the *.yml files from `files/` input but after interpolation

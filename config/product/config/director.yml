@@ -1,3 +1,4 @@
+---
 az-configuration:
 - name: {{index .azs 0}}
 - name: {{index .azs 1}}

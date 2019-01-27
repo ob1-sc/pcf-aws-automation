@@ -1,3 +1,4 @@
+---
 product-name: cf
 product-properties:
   .cloud_controller.apps_domain:
@@ -40,7 +41,6 @@ product-properties:
     value: {{.pas_droplets_bucket}}
   .properties.system_blobstore.external.endpoint:
     value: https://s3.{{.region}}.amazonaws.com
-    # value: ((pas_blobstore_s3_endpoint))
   .properties.system_blobstore.external.packages_bucket:
     value: {{.pas_packages_bucket}}
   .properties.system_blobstore.external.region:

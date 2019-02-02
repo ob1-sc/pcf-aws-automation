@@ -1,0 +1,16 @@
+---
+resources:
+
+- name: pcf-aws-automation
+  type: git
+  source:
+    uri: https://github.com/ob1-sc/pcf-aws-automation
+    branch: master
+
+jobs:
+
+- name: test-job
+  plan:
+  - get: pcf-aws-automation
+  - task: test-task
+    file: pcf-aws-automation/tasks/test-task/task.yml

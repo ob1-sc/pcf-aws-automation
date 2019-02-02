@@ -1,0 +1,10 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pcfnorm/rootfs
+    tag: 1.0.20
+run:
+  path: pcf-aws-automation/tasks/test-task/task.sh

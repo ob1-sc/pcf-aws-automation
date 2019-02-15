@@ -10,7 +10,6 @@ resources:
 - name: pcf-aws-automation
   type: git
   source:
-    private_key: ((git-key.private_key))
     uri: ((automation_repo))
     branch: master
 

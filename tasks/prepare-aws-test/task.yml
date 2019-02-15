@@ -1,0 +1,18 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pcfnorm/rootfs
+    tag: 1.0.20
+inputs:
+  - name: aws-terraform
+  - name: pcf-aws-automation
+params:
+  ENV_NAME:
+  AWS_ACCESS_KEY_ID:
+  AWS_SECRET_ACCESS_KEY:
+  AWS_REGION:
+run:
+  path: pcf-aws-automation/tasks/prepare-aws-test/task.sh

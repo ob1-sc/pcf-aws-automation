@@ -1,0 +1,5 @@
+---
+terraform_repo: https://github.com/ob1-sc/tf-test
+automation_repo: git@github.com:ob1-sc/pcf-aws-automation.git
+env_name: tf-test
+aws_region: eu-west-1

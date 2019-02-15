@@ -14,6 +14,7 @@ terraform plan \
   -var "secret_key=${AWS_SECRET_ACCESS_KEY}" \
   -var "aws_region=${AWS_REGION}" \
   -var "region=${AWS_REGION}" \
+  -out terraform.tfplan \
   aws-terraform
 
-terraform apply
+terraform apply terraform.tfplan

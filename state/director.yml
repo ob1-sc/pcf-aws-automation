@@ -1,0 +1,143 @@
+az-configuration:
+- name: eu-west-1a
+  iaas_configuration_guid: 514d066bf087eaf99a29
+- name: eu-west-1b
+  iaas_configuration_guid: 514d066bf087eaf99a29
+- name: eu-west-1c
+  iaas_configuration_guid: 514d066bf087eaf99a29
+network-assignment:
+  network:
+    name: pas-infrastructure-network
+  other_availability_zones: []
+  singleton_availability_zone:
+    name: eu-west-1a
+networks-configuration:
+  icmp_checks_enabled: false
+  networks:
+  - name: pas-infrastructure-network
+    subnets:
+    - iaas_identifier: subnet-00f62484011c92e1f
+      cidr: 10.0.16.0/28
+      dns: 10.0.0.2
+      gateway: 10.0.16.1
+      reserved_ip_ranges: 10.0.16.0-10.0.16.4
+      availability_zone_names:
+      - eu-west-1a
+    - iaas_identifier: subnet-0d3c4e93ecc8edc5f
+      cidr: 10.0.16.16/28
+      dns: 10.0.0.2
+      gateway: 10.0.16.17
+      reserved_ip_ranges: 10.0.16.16-10.0.16.20
+      availability_zone_names:
+      - eu-west-1b
+    - iaas_identifier: subnet-032d4f0d24f874996
+      cidr: 10.0.16.32/28
+      dns: 10.0.0.2
+      gateway: 10.0.16.33
+      reserved_ip_ranges: 10.0.16.32-10.0.16.36
+      availability_zone_names:
+      - eu-west-1c
+  - name: pas-ert-network
+    subnets:
+    - iaas_identifier: subnet-03631bd1aae7d02ac
+      cidr: 10.0.4.0/24
+      dns: 10.0.0.2
+      gateway: 10.0.4.1
+      reserved_ip_ranges: 10.0.4.0-10.0.4.4
+      availability_zone_names:
+      - eu-west-1a
+    - iaas_identifier: subnet-0c1a98c9b3d9b3219
+      cidr: 10.0.5.0/24
+      dns: 10.0.0.2
+      gateway: 10.0.5.1
+      reserved_ip_ranges: 10.0.5.0-10.0.5.4
+      availability_zone_names:
+      - eu-west-1b
+    - iaas_identifier: subnet-043b1870455394a11
+      cidr: 10.0.6.0/24
+      dns: 10.0.0.2
+      gateway: 10.0.6.1
+      reserved_ip_ranges: 10.0.6.0-10.0.6.4
+      availability_zone_names:
+      - eu-west-1c
+  - name: pas-services-network
+    subnets:
+    - iaas_identifier: subnet-0976c2d0fc45e83ec
+      cidr: 10.0.8.0/24
+      dns: 10.0.0.2
+      gateway: 10.0.8.1
+      reserved_ip_ranges: 10.0.8.0-10.0.8.4
+      availability_zone_names:
+      - eu-west-1a
+    - iaas_identifier: subnet-030fb2c27dd6f62a1
+      cidr: 10.0.9.0/24
+      dns: 10.0.0.2
+      gateway: 10.0.9.1
+      reserved_ip_ranges: 10.0.9.0-10.0.9.4
+      availability_zone_names:
+      - eu-west-1b
+    - iaas_identifier: subnet-019d27dde2d113752
+      cidr: 10.0.10.0/24
+      dns: 10.0.0.2
+      gateway: 10.0.10.1
+      reserved_ip_ranges: 10.0.10.0-10.0.10.4
+      availability_zone_names:
+      - eu-west-1c
+properties-configuration:
+  director_configuration:
+    allow_legacy_agents: true
+    blobstore_type: local
+    bosh_recreate_on_next_deploy: false
+    bosh_recreate_persistent_disks_on_next_deploy: false
+    database_type: internal
+    director_worker_count: 5
+    encryption:
+      keys: []
+      providers: []
+    hm_emailer_options:
+      enabled: false
+    hm_pager_duty_options:
+      enabled: false
+    identification_tags: {}
+    keep_unreachable_vms: false
+    local_blobstore_options:
+      tls_enabled: true
+    ntp_servers_string: 0.amazon.pool.ntp.org, 1.amazon.pool.ntp.org, 2.amazon.pool.ntp.org,
+      3.amazon.pool.ntp.org
+    post_deploy_enabled: false
+    resurrector_enabled: false
+    retry_bosh_deploys: false
+    skip_director_drain: true
+  dns_configuration:
+    excluded_recursors: []
+    handlers: []
+  iaas_configuration:
+    additional_cloud_properties: {}
+    encrypted: false
+    guid: ((properties-configuration_iaas_configuration_guid))
+    iam_instance_profile: ((properties-configuration_iaas_configuration_iam_instance_profile))
+    key_pair_name: ((properties-configuration_iaas_configuration_key_pair_name))
+    kms_key_arn: ((properties-configuration_iaas_configuration_kms_key_arn))
+    name: ((properties-configuration_iaas_configuration_name))
+    region: ((properties-configuration_iaas_configuration_region))
+    security_group: ((properties-configuration_iaas_configuration_security_group))
+  security_configuration:
+    generate_vm_passwords: true
+    opsmanager_root_ca_trusted_certs: false
+  syslog_configuration:
+    enabled: false
+resource-configuration:
+  compilation:
+    instances: automatic
+    instance_type:
+      id: automatic
+    internet_connected: false
+  director:
+    instances: automatic
+    persistent_disk:
+      size_mb: automatic
+    instance_type:
+      id: automatic
+    internet_connected: false
+vmextensions-configuration: []
+

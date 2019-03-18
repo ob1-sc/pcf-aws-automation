@@ -10,7 +10,7 @@ properties-configuration:
     region: {{.region}}
     security_group: {{.vms_security_group_id}}
     ssh_private_key: |
-  {{indent 4 .ops_manager_ssh_private_key}}
+{{indent 6 .ops_manager_ssh_private_key}}
 network-assignment:
   network:
     name: pas-infrastructure-network

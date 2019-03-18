@@ -1,19 +1,16 @@
 ---
-az-configuration:
-- name: {{index .azs 0}}
-- name: {{index .azs 1}}
-- name: {{index .azs 2}}
-director-configuration:
-  ntp_servers_string: ((ntp_servers))
-iaas-configuration:
-  access_type: aws-keys
-  access_key_id: ((aws_access_key_id))
-  secret_access_key: ((aws_secret_access_key))
-  key_pair_name: {{.ops_manager_ssh_public_key_name}}
-  region: {{.region}}
-  security_group: {{.vms_security_group_id}}
-  ssh_private_key: |
-{{indent 4 .ops_manager_ssh_private_key}}
+properties-configuration:
+  director_configuration:
+    ntp_servers_string: ((ntp_servers))
+  iaas_configuration:
+    access_type: aws-keys
+    access_key_id: ((aws_access_key_id))
+    secret_access_key: ((aws_secret_access_key))
+    key_pair_name: {{.ops_manager_ssh_public_key_name}}
+    region: {{.region}}
+    security_group: {{.vms_security_group_id}}
+    ssh_private_key: |
+  {{indent 4 .ops_manager_ssh_private_key}}
 network-assignment:
   network:
     name: pas-infrastructure-network
@@ -21,3 +18,7 @@ network-assignment:
     name: {{index .azs 0}}
 networks-configuration:
   networks: ((networks-configuration))
+az-configuration:
+- name: {{index .azs 0}}
+- name: {{index .azs 1}}
+- name: {{index .azs 2}}

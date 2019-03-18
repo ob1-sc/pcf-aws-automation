@@ -7,21 +7,21 @@ aws_secret_access_key: ((/concourse/main/secret_access_key))
 networks-configuration:
   - name: pas-infrastructure-network
     subnets:
-    - iaas_identifier: subnet-0605e562f26cb8865
+    - iaas_identifier: subnet-00f62484011c92e1f
       cidr: 10.0.16.0/28
       dns: 10.0.0.2
       gateway: 10.0.16.1
       reserved_ip_ranges: 10.0.16.0-10.0.16.4
       availability_zone_names:
       - eu-west-1a
-    - iaas_identifier: subnet-01d61ffc823dd2b78
+    - iaas_identifier: subnet-0d3c4e93ecc8edc5f
       cidr: 10.0.16.16/28
       dns: 10.0.0.2
       gateway: 10.0.16.17
       reserved_ip_ranges: 10.0.16.16-10.0.16.20
       availability_zone_names:
       - eu-west-1b
-    - iaas_identifier: subnet-03ca3634f0787e273
+    - iaas_identifier: subnet-032d4f0d24f874996
       cidr: 10.0.16.32/28
       dns: 10.0.0.2
       gateway: 10.0.16.33
@@ -30,21 +30,21 @@ networks-configuration:
       - eu-west-1c
   - name: pas-ert-network
     subnets:
-    - iaas_identifier: subnet-0374d494db92ce076
+    - iaas_identifier: subnet-03631bd1aae7d02ac
       cidr: 10.0.4.0/24
       dns: 10.0.0.2
       gateway: 10.0.4.1
       reserved_ip_ranges: 10.0.4.0-10.0.4.4
       availability_zone_names:
       - eu-west-1a
-    - iaas_identifier: subnet-0e13c5fa4f80af4c1
+    - iaas_identifier: subnet-0c1a98c9b3d9b3219
       cidr: 10.0.5.0/24
       dns: 10.0.0.2
       gateway: 10.0.5.1
       reserved_ip_ranges: 10.0.5.0-10.0.5.4
       availability_zone_names:
       - eu-west-1b
-    - iaas_identifier: subnet-04a34b8e641e3a4b3
+    - iaas_identifier: subnet-043b1870455394a11
       cidr: 10.0.6.0/24
       dns: 10.0.0.2
       gateway: 10.0.6.1
@@ -53,21 +53,21 @@ networks-configuration:
       - eu-west-1c
   - name: pas-services-network
     subnets:
-    - iaas_identifier: subnet-0a3f06c53a6a786b8
+    - iaas_identifier: subnet-0976c2d0fc45e83ec
       cidr: 10.0.8.0/24
       dns: 10.0.0.2
       gateway: 10.0.8.1
       reserved_ip_ranges: 10.0.8.0-10.0.8.4
       availability_zone_names:
       - eu-west-1a
-    - iaas_identifier: subnet-08c0455a3457a6b08
+    - iaas_identifier: subnet-030fb2c27dd6f62a1
       cidr: 10.0.9.0/24
       dns: 10.0.0.2
       gateway: 10.0.9.1
       reserved_ip_ranges: 10.0.9.0-10.0.9.4
       availability_zone_names:
       - eu-west-1b
-    - iaas_identifier: subnet-089894276b6a8ef2b
+    - iaas_identifier: subnet-019d27dde2d113752
       cidr: 10.0.10.0/24
       dns: 10.0.0.2
       gateway: 10.0.10.1
